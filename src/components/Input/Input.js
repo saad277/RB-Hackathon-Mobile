@@ -4,7 +4,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { Colors, CommonStyles } from "../../styles";
 
 const Input = (props) => {
-    const { onChange, value, placeHolder, secureText = false } = props;
+    const { onChange=()=>{}, value, placeHolder, secureText = false } = props;
 
     return (
         <View style={styles.inputView}>
