@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Dimensions } from "react-native";
+import { View, TouchableOpacity, Dimensions, StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Styles from "../styles/Login";
+
 import Button from "../components/Button";
 import Input from "../components/Input";
 
 const { width, height } = Dimensions.get("window");
-const Signup = ({ navigation }) => {
+
+const Signup = (props) => {
+
     const [passwordHideState1, setPasswordHideState1] = useState(true);
     const [passwordHideState2, setPasswordHideState2] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    
     return (
         <View style={Styles.main}>
             <View style={Styles.inputView}>
@@ -73,5 +76,24 @@ const Signup = ({ navigation }) => {
         </View>
     );
 };
+
+const Styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: "white",
+        paddingHorizontal: width * 0.05,
+    },
+    inputView: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        borderBottomColor: "silver",
+        borderBottomWidth: 1,
+    },
+    input: {
+        marginLeft: width * 0.04,
+        width: "100%",
+    },
+});
 
 export default Signup;

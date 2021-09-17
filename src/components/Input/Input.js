@@ -22,19 +22,14 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
     inputView: {
-        // backgroundColor: Colors.secondary,
         borderRadius: 25,
-        // height: 50,
-        // margin left added
         marginLeft: 10,
-        // marginBottom: 20,
         ...CommonStyles.justifyCenter,
-        // padding: 20,
+        ...CommonStyles.flexOne,
     },
     inputText: {
         height: 50,
         fontSize: 16,
-        // color changed to black
         color: Colors.black,
     },
 });
