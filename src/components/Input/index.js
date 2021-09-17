@@ -1,2 +1,2 @@
-import Input from './Input';
-export {Input};
+import Input from "./Input";
+export default Input;
