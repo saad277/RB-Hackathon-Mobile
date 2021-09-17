@@ -4,7 +4,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { Colors, CommonStyles } from "../../styles";
 
 const Input = (props) => {
-    const { onChange, value, placeHolder, secureText = false } = props;
+    const { onChange=()=>{}, value, placeHolder, secureText = false } = props;
 
     return (
         <View style={styles.inputView}>
@@ -22,8 +22,9 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
     inputView: {
-        backgroundColor: Colors.secondary,
-        borderRadius: 25,
+        borderColor: Colors.primary,
+        borderWidth: 1.4,
+        borderRadius: 12,
         height: 50,
         marginBottom: 20,
         ...CommonStyles.justifyCenter,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     inputText: {
         height: 50,
         fontSize: 20,
-        color: Colors.white,
+        color: Colors.primary,
     },
 });
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 
-import { Colors } from "../../styles";
+import { Colors, CommonStyles } from "../../styles";
 
 const Button = (props) => {
-    const { title, onPress = () => {}, loading = false, disabled = false, style } = props;
+    const { title="Submit", onPress = () => {}, loading = false, disabled = false, style } = props;
 
     return (
         <TouchableOpacity
@@ -25,14 +25,14 @@ const Button = (props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.primary,
-        borderRadius: 25,
+        borderRadius: 12,
         height: 50,
-        alignItems: "center",
-        justifyContent: "center",
+        ...CommonStyles.alignItemCenter,
+        ...CommonStyles.justifyCenter,
     },
     text: {
         color: Colors.white,
-        fontSize: 20,
+        fontSize: 19,
     },
 });
 
