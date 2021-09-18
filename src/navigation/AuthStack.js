@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import APP_ROUTES from "./routes";
 import Login from "../screens/Authentication/Login";
+import SignUp from "../screens/Authentication/SignUp";
 
 const Stack = createStackNavigator();
 
@@ -10,6 +11,10 @@ const routes = [
     {
         name: APP_ROUTES.LOGIN,
         screen: Login,
+    },
+    {
+        name: APP_ROUTES.SIGNUP,
+        screen: SignUp,
     },
 ];
 
