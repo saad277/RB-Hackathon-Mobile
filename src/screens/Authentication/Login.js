@@ -67,7 +67,7 @@ const Login = (props) => {
                         secureText={passwordHideState}
                     />
                 </View>
-                <Button title={"Login"} style={styles.btn} />
+                <Button title={"Login"} style={styles.btn} onPress={handleSubmit} />
                 <TouchableOpacity
                     style={styles.textContainer}
                     onPress={() => navigation.navigate(APP_ROUTES.SIGNUP)}

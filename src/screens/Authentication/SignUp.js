@@ -23,7 +23,7 @@ import APP_ROUTES from "../../navigation";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { DatePicker } from "../../components/DatePicker";
-import { GenderConstants } from "../../constants";
+import { GenderConstants, UserRoles } from "../../constants";
 import { signUp } from "../../store/actions";
 
 import Avatar from "../../assets/avatar.png";
@@ -49,6 +49,7 @@ const Login = (props) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showGenderPicker, setShowGenderPicker] = useState(false);
     const [image, setImage] = useState(null);
+    const [fetching, setFetching] = useState(false);
     const navigation = useNavigation();
 
     const handleGenderChange = (itemValue) => {
@@ -105,6 +106,26 @@ const Login = (props) => {
         if (!canSubmit()) {
             return;
         }
+
+        let payload = {
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            phone: phone,
+            dob: date,
+            gender: gender,
+            address: address,
+            email: email,
+            role: UserRoles.PATIENT,
+            img: image.base64,
+        };
+
+        signUp(payload)
+            .then((res) => {})
+            .catch((err) => {})
+            .finally(() => {
+                setFetching(false);
+            });
     };
 
     return (
@@ -241,7 +262,12 @@ const Login = (props) => {
                         />
                     </View>
 
-                    <Button title={"Sign Up"} style={styles.btn} onPress={handleSubmit} />
+                    <Button
+                        title={"Sign Up"}
+                        style={styles.btn}
+                        onPress={handleSubmit}
+                        loading={fetching}
+                    />
                     <TouchableOpacity
                         style={styles.textContainer}
                         onPress={() => navigation.navigate(APP_ROUTES.LOGIN)}
