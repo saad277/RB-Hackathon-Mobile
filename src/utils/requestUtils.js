@@ -1,14 +1,10 @@
 import axios from "axios";
 
-import { apiUrl, EC2Url } from "../Config";
+import { apiUrl } from "../Config";
 import { store } from "../store";
 
 export const httpRequest = axios.create({
     baseURL: apiUrl,
-});
-
-export const ec2Request = axios.create({
-    baseURL: EC2Url,
 });
 
 export const postConfig = {

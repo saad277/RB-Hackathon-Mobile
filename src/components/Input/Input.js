@@ -11,6 +11,7 @@ const Input = (props) => {
         secureText = false,
         containerStyles = {},
         editable = true,
+        keyboardType = "default",
     } = props;
 
     return (
@@ -23,6 +24,7 @@ const Input = (props) => {
                 onChangeText={(value) => onChange(value)}
                 secureTextEntry={secureText}
                 editable={editable}
+                keyboardType={keyboardType}
             />
         </View>
     );

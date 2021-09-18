@@ -13,6 +13,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
+import Snackbar from "react-native-snackbar";
+import { connect } from "react-redux";
 
 import { CommonStyles, Colors } from "../../styles";
 
@@ -21,6 +23,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { DatePicker } from "../../components/DatePicker";
 import { GenderConstants } from "../../constants";
+import { signUp } from "../../store/actions";
 
 import Avatar from "../../assets/avatar.png";
 
@@ -31,7 +34,8 @@ const GENDER_LABELS = {
     [GenderConstants.FEMALE]: "Female",
 };
 
-const Login = () => {
+const Login = (props) => {
+    const { signUp } = props;
     const [passwordHideState, setPasswordHideState] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -43,11 +47,50 @@ const Login = () => {
     const [gender, setGender] = useState("");
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showGenderPicker, setShowGenderPicker] = useState(false);
+    const [image, setImage] = useState(null);
     const navigation = useNavigation();
 
     const handleGenderChange = (itemValue) => {
         setShowGenderPicker(false);
         setGender(itemValue);
+    };
+
+    const canSubmit = () => {
+        if (
+            !(
+                firstName.trim().length &&
+                lastName.trim().length &&
+                email.trim().length &&
+                password.trim().length &&
+                phone.trim().length &&
+                Boolean(date) &&
+                address.trim().length &&
+                Boolean(gender)
+            )
+        ) {
+            Snackbar.show({
+                text: "Please please fill all fields",
+                duration: Snackbar.LENGTH_SHORT,
+            });
+
+            return false;
+        }
+
+        if (!image) {
+            Snackbar.show({
+                text: "Please please select an image",
+                duration: Snackbar.LENGTH_SHORT,
+            });
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = () => {
+        if (!canSubmit()) {
+            return;
+        }
     };
 
     return (
@@ -113,6 +156,7 @@ const Login = () => {
                             value={phone}
                             placeHolder={"Phone"}
                             secureText={false}
+                            keyboardType={"phone-pad"}
                         />
                     </View>
 
@@ -179,7 +223,7 @@ const Login = () => {
                         />
                     </View>
 
-                    <Button title={"Sign Up"} style={styles.btn} />
+                    <Button title={"Sign Up"} style={styles.btn} onPress={handleSubmit} />
                     <TouchableOpacity
                         style={styles.textContainer}
                         onPress={() => navigation.navigate(APP_ROUTES.LOGIN)}
@@ -249,4 +293,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;
+const mapDispatchToProps = {
+    signUp,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
