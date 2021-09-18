@@ -4,15 +4,21 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { Colors, CommonStyles } from "../../styles";
 
 const Input = (props) => {
-    const { onChange=()=>{}, value, placeHolder, secureText = false } = props;
+    const {
+        onChange = () => {},
+        value,
+        placeHolder,
+        secureText = false,
+        containerStyles = {},
+    } = props;
 
     return (
-        <View style={styles.inputView}>
+        <View style={[styles.inputView, containerStyles]}>
             <TextInput
                 value={value}
                 style={styles.inputText}
                 placeholder={placeHolder}
-                placeholderTextColor="#fff"
+                placeholderTextColor={Colors.secondary}
                 onChangeText={(value) => onChange(value)}
                 secureTextEntry={secureText}
             />

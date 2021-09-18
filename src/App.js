@@ -1,7 +1,13 @@
 import React from "react";
-import Navigation from "./navigation/routes";
+import { NavigationContainer } from "@react-navigation/native";
+import { AuthStack } from "./navigation";
+
 const App = () => {
-    return <Navigation />;
+    return (
+        <NavigationContainer>
+            <AuthStack />
+        </NavigationContainer>
+    );
 };
 
 export default App;

@@ -6,10 +6,14 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 
 const { width, height } = Dimensions.get("window");
-const Login = ({ navigation }) => {
-    const [passwordHideState, setPasswordHideState] = useState(true);
+
+const Signup = (props) => {
+    const [passwordHideState1, setPasswordHideState1] = useState(true);
+    const [passwordHideState2, setPasswordHideState2] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
     return (
         <View style={Styles.main}>
             <View style={Styles.inputView}>
@@ -24,10 +28,10 @@ const Login = ({ navigation }) => {
             <View style={Styles.inputView}>
                 <TouchableOpacity
                     onPress={() => {
-                        setPasswordHideState(!passwordHideState);
+                        setPasswordHideState1(!passwordHideState1);
                     }}
                 >
-                    {passwordHideState == true ? (
+                    {passwordHideState1 == true ? (
                         <Ionicons size={height * 0.04} name="eye-outline" />
                     ) : (
                         <Ionicons size={height * 0.04} name="eye-off-outline" />
@@ -37,11 +41,30 @@ const Login = ({ navigation }) => {
                     onChange={setPassword}
                     value={password}
                     placeHolder={"Password"}
-                    secureText={passwordHideState}
+                    secureText={passwordHideState1}
+                />
+            </View>
+            <View style={Styles.inputView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        setPasswordHideState2(!passwordHideState2);
+                    }}
+                >
+                    {passwordHideState2 == true ? (
+                        <Ionicons size={height * 0.04} name="eye-outline" />
+                    ) : (
+                        <Ionicons size={height * 0.04} name="eye-off-outline" />
+                    )}
+                </TouchableOpacity>
+                <Input
+                    onChange={setConfirmPassword}
+                    value={confirmPassword}
+                    placeHolder={"Password"}
+                    secureText={passwordHideState2}
                 />
             </View>
             <Button
-                title={"login"}
+                title={"sign up"}
                 onPress={() => {
                     console.log("hello");
                 }}
@@ -72,4 +95,4 @@ const Styles = StyleSheet.create({
     },
 });
 
-export default Login;
+export default Signup;
