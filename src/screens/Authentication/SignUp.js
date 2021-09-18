@@ -13,6 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
+import ImagePicker from "react-native-image-crop-picker";
 import Snackbar from "react-native-snackbar";
 import { connect } from "react-redux";
 
@@ -87,6 +88,19 @@ const Login = (props) => {
         return true;
     };
 
+    const openGallery = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            includeBase64: true,
+            cropping: true,
+        })
+            .then((image) => {
+                setImage({ base64: image.data, path: image.path });
+            })
+            .catch((err) => {});
+    };
+
     const handleSubmit = () => {
         if (!canSubmit()) {
             return;
@@ -98,8 +112,12 @@ const Login = (props) => {
             <ScrollView>
                 <View style={styles.main}>
                     <View style={styles.wrapper}>
-                        <Image source={Avatar} style={styles.img} resizeMode="cover" />
-                        <TouchableOpacity style={styles.editContainer}>
+                        <Image
+                            source={image ? { uri: image.path } : Avatar}
+                            style={styles.img}
+                            resizeMode="cover"
+                        />
+                        <TouchableOpacity style={styles.editContainer} onPress={openGallery}>
                             <Ionicons size={height * 0.04} name="pencil" />
                         </TouchableOpacity>
                     </View>
@@ -165,7 +183,7 @@ const Login = (props) => {
                             <Ionicons size={height * 0.04} name="md-calendar-sharp" />
                             <Input
                                 onChange={setDate}
-                                value={moment(date).format("DD-MM-YYYY")}
+                                value={date ? moment(date).format("DD-MM-YYYY") : ""}
                                 placeHolder={"Date"}
                                 secureText={false}
                                 editable={false}

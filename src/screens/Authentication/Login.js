@@ -2,20 +2,43 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Dimensions, StyleSheet, Text, ScrollView } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import Snackbar from "react-native-snackbar";
+import { connect } from "react-redux";
 
 import { CommonStyles, Colors } from "../../styles";
 
 import APP_ROUTES from "../../navigation";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { login } from "../../store/actions";
 
 const { width, height } = Dimensions.get("window");
 
-const Login = () => {
+const Login = (props) => {
+    const { login } = props;
+
     const [passwordHideState, setPasswordHideState] = useState(true);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
+
+    const canSubmit = () => {
+        if (!(email.trim().length && password.trim().length)) {
+            Snackbar.show({
+                text: "Please please fill all fields",
+                duration: Snackbar.LENGTH_SHORT,
+            });
+
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = () => {
+        if (!canSubmit()) {
+        }
+    };
 
     return (
         <View style={CommonStyles.flexOne}>
@@ -23,8 +46,8 @@ const Login = () => {
                 <View style={[styles.inputView, styles.mb16]}>
                     <Ionicons size={height * 0.04} name="mail-open-outline" />
                     <Input
-                        onChange={setUsername}
-                        value={username}
+                        onChange={email}
+                        value={setEmail}
                         placeHolder={"Email"}
                         secureText={false}
                     />
@@ -32,11 +55,10 @@ const Login = () => {
 
                 <View style={[styles.inputView, styles.mb32]}>
                     <TouchableOpacity onPress={() => setPasswordHideState(!passwordHideState)}>
-                        {passwordHideState == true ? (
-                            <Ionicons size={height * 0.04} name="eye-outline" />
-                        ) : (
-                            <Ionicons size={height * 0.04} name="eye-off-outline" />
-                        )}
+                        <Ionicons
+                            size={height * 0.04}
+                            name={passwordHideState ? "eye-outline" : "eye-off-outline"}
+                        />
                     </TouchableOpacity>
                     <Input
                         onChange={setPassword}
@@ -88,4 +110,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;
+const mapDispatchToProps = {
+    login,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
