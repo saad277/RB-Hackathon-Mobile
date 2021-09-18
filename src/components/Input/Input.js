@@ -10,6 +10,7 @@ const Input = (props) => {
         placeHolder,
         secureText = false,
         containerStyles = {},
+        editable = true,
     } = props;
 
     return (
@@ -21,6 +22,7 @@ const Input = (props) => {
                 placeholderTextColor={Colors.secondary}
                 onChangeText={(value) => onChange(value)}
                 secureTextEntry={secureText}
+                editable={editable}
             />
         </View>
     );

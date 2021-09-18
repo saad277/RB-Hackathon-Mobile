@@ -7,6 +7,7 @@ import {
     Text,
     Image,
     ScrollView,
+    TouchableWithoutFeedback,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +17,7 @@ import { CommonStyles, Colors } from "../../styles";
 import APP_ROUTES from "../../navigation";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { DatePicker } from "../../components/DatePicker";
 
 import Avatar from "../../assets/avatar.png";
 
@@ -23,9 +25,19 @@ const { width, height } = Dimensions.get("window");
 
 const Login = () => {
     const [passwordHideState, setPasswordHideState] = useState(true);
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
+    const [date, setDate] = useState("");
+    const [address, setAddress] = useState("");
+    const [gender, setGender] = useState("");
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const navigation = useNavigation();
+
+
+    console.log(date)
 
     return (
         <View style={styles.container}>
@@ -41,8 +53,8 @@ const Login = () => {
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="person" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setFirstName}
+                            value={firstName}
                             placeHolder={"First Name"}
                             secureText={false}
                         />
@@ -51,8 +63,8 @@ const Login = () => {
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="person-outline" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setLastName}
+                            value={lastName}
                             placeHolder={"Last Name"}
                             secureText={false}
                         />
@@ -61,8 +73,8 @@ const Login = () => {
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="md-mail-outline" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setEmail}
+                            value={email}
                             placeHolder={"Email"}
                             secureText={false}
                         />
@@ -70,11 +82,10 @@ const Login = () => {
 
                     <View style={[styles.inputView, styles.mb16]}>
                         <TouchableOpacity onPress={() => setPasswordHideState(!passwordHideState)}>
-                            {passwordHideState == true ? (
-                                <Ionicons size={height * 0.04} name="eye-outline" />
-                            ) : (
-                                <Ionicons size={height * 0.04} name="eye-off-outline" />
-                            )}
+                            <Ionicons
+                                size={height * 0.04}
+                                name={passwordHideState ? "eye-outline" : "eye-off-outline"}
+                            />
                         </TouchableOpacity>
                         <Input
                             onChange={setPassword}
@@ -87,28 +98,37 @@ const Login = () => {
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="phone-portrait-outline" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setPhone}
+                            value={phone}
                             placeHolder={"Phone"}
                             secureText={false}
                         />
                     </View>
 
-                    <View style={[styles.inputView, styles.mb16]}>
-                        <Ionicons size={height * 0.04} name="md-calendar-sharp" />
-                        <Input
-                            onChange={setUsername}
-                            value={username}
-                            placeHolder={"Date"}
-                            secureText={false}
-                        />
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => setShowDatePicker(true)}>
+                        <View style={[styles.inputView, styles.mb16]}>
+                            <Ionicons size={height * 0.04} name="md-calendar-sharp" />
+                            <Input
+                                onChange={setDate}
+                                value={String(date)}
+                                placeHolder={"Date"}
+                                secureText={false}
+                                editable={false}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+
+                    <DatePicker
+                        isOpen={showDatePicker}
+                        setDateTime={setDate}
+                        setShow={setShowDatePicker}
+                    />
 
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="person-circle" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setGender}
+                            value={gender}
                             placeHolder={"Gender"}
                             secureText={false}
                         />
@@ -117,8 +137,8 @@ const Login = () => {
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="card-outline" />
                         <Input
-                            onChange={setUsername}
-                            value={username}
+                            onChange={setAddress}
+                            value={address}
                             placeHolder={"Address"}
                             secureText={false}
                         />
@@ -147,7 +167,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         paddingHorizontal: width * 0.05,
         ...CommonStyles.justifyCenter,
-        marginBottom:20
+        marginBottom: 20,
     },
     mb16: {
         marginBottom: 16,
@@ -170,11 +190,12 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginHorizontal: width * 0.1,
-        marginTop:15
+        marginTop: 15,
     },
     wrapper: {
         ...CommonStyles.relative,
         marginBottom: 30,
+        marginTop: 16,
     },
     img: {
         width: 140,
