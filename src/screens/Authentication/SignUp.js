@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
+import moment from "moment";
 
 import { CommonStyles, Colors } from "../../styles";
 
@@ -18,10 +20,16 @@ import APP_ROUTES from "../../navigation";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { DatePicker } from "../../components/DatePicker";
+import { GenderConstants } from "../../constants";
 
 import Avatar from "../../assets/avatar.png";
 
 const { width, height } = Dimensions.get("window");
+
+const GENDER_LABELS = {
+    [GenderConstants.MALE]: "Male",
+    [GenderConstants.FEMALE]: "Female",
+};
 
 const Login = () => {
     const [passwordHideState, setPasswordHideState] = useState(true);
@@ -34,10 +42,13 @@ const Login = () => {
     const [address, setAddress] = useState("");
     const [gender, setGender] = useState("");
     const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showGenderPicker, setShowGenderPicker] = useState(false);
     const navigation = useNavigation();
 
-
-    console.log(date)
+    const handleGenderChange = (itemValue) => {
+        setShowGenderPicker(false);
+        setGender(itemValue);
+    };
 
     return (
         <View style={styles.container}>
@@ -110,7 +121,7 @@ const Login = () => {
                             <Ionicons size={height * 0.04} name="md-calendar-sharp" />
                             <Input
                                 onChange={setDate}
-                                value={String(date)}
+                                value={moment(date).format("DD-MM-YYYY")}
                                 placeHolder={"Date"}
                                 secureText={false}
                                 editable={false}
@@ -124,15 +135,39 @@ const Login = () => {
                         setShow={setShowDatePicker}
                     />
 
-                    <View style={[styles.inputView, styles.mb16]}>
-                        <Ionicons size={height * 0.04} name="person-circle" />
-                        <Input
-                            onChange={setGender}
-                            value={gender}
-                            placeHolder={"Gender"}
-                            secureText={false}
-                        />
-                    </View>
+                    <TouchableWithoutFeedback
+                        onPress={() => setShowGenderPicker(!showGenderPicker)}
+                    >
+                        <View style={[styles.inputView, styles.mb16]}>
+                            <Ionicons size={height * 0.04} name="person-circle" />
+                            <Input
+                                onChange={setGender}
+                                value={GENDER_LABELS[gender]}
+                                placeHolder={"Gender"}
+                                secureText={false}
+                                editable={false}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+
+                    {showGenderPicker && (
+                        <View style={CommonStyles.relative}>
+                            <Picker
+                                dropdownIconColor="white"
+                                mode="dialog"
+                                selectedValue={gender}
+                                onValueChange={handleGenderChange}
+                            >
+                                <Picker.Item label="Male" value={GenderConstants.MALE} />
+                                <Picker.Item label="Female" value={GenderConstants.FEMALE} />
+                            </Picker>
+                            <Ionicons
+                                size={height * 0.04}
+                                name="md-arrow-down-circle"
+                                style={{ position: "absolute", right: "2%", top: "25%" }}
+                            />
+                        </View>
+                    )}
 
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="card-outline" />
