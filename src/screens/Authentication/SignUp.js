@@ -43,13 +43,23 @@ const Login = () => {
                         <Input
                             onChange={setUsername}
                             value={username}
-                            placeHolder={"Email"}
+                            placeHolder={"First Name"}
                             secureText={false}
                         />
                     </View>
 
                     <View style={[styles.inputView, styles.mb16]}>
                         <Ionicons size={height * 0.04} name="person-outline" />
+                        <Input
+                            onChange={setUsername}
+                            value={username}
+                            placeHolder={"Last Name"}
+                            secureText={false}
+                        />
+                    </View>
+
+                    <View style={[styles.inputView, styles.mb16]}>
+                        <Ionicons size={height * 0.04} name="md-mail-outline" />
                         <Input
                             onChange={setUsername}
                             value={username}
@@ -79,7 +89,7 @@ const Login = () => {
                         <Input
                             onChange={setUsername}
                             value={username}
-                            placeHolder={"Email"}
+                            placeHolder={"Phone"}
                             secureText={false}
                         />
                     </View>
@@ -89,7 +99,7 @@ const Login = () => {
                         <Input
                             onChange={setUsername}
                             value={username}
-                            placeHolder={"Email"}
+                            placeHolder={"Date"}
                             secureText={false}
                         />
                     </View>
@@ -99,7 +109,7 @@ const Login = () => {
                         <Input
                             onChange={setUsername}
                             value={username}
-                            placeHolder={"Email"}
+                            placeHolder={"Gender"}
                             secureText={false}
                         />
                     </View>
@@ -109,7 +119,7 @@ const Login = () => {
                         <Input
                             onChange={setUsername}
                             value={username}
-                            placeHolder={"Email"}
+                            placeHolder={"Address"}
                             secureText={false}
                         />
                     </View>
@@ -137,6 +147,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         paddingHorizontal: width * 0.05,
         ...CommonStyles.justifyCenter,
+        marginBottom:20
     },
     mb16: {
         marginBottom: 16,
@@ -159,6 +170,7 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginHorizontal: width * 0.1,
+        marginTop:15
     },
     wrapper: {
         ...CommonStyles.relative,
