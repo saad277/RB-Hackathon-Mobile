@@ -1,6 +1,9 @@
 export default {
-    LOGIN: "LOGIN",
-    SIGNUP: "SIGNUP",
-    SPLASH: "SPLASH",
-    AUTH: "AUTH",
+    LOGIN: "Login",
+    SIGNUP: "SignUp",
+    SPLASH: "Splash",
+    AUTH: "Auth",
+    USER:"User",
+    APPOINTMENTS: "Appointments",
+    PROFILE: "Profile",
 };

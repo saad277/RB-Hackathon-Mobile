@@ -5,6 +5,7 @@ import APP_ROUTES from "./routes";
 
 import Splash from "../screens/Splash/Splash";
 import AuthStack from "./AuthStack";
+import UserStack from "./UserStack";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ export default () => {
             <Stack.Screen
                 name={APP_ROUTES.AUTH}
                 component={AuthStack}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={APP_ROUTES.USER}
+                component={UserStack}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
