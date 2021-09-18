@@ -8,7 +8,7 @@ export const LOG_OUT = "LOG_OUT";
 
 export const login = (payload) => (dispatch) => {
     return httpRequest
-        .post("/api/user/login", payload, postConfig)
+        .post("/users/", payload, postConfig)
         .then(async (res) => {
             console.log(res);
             //  let token = res.data.Token;
@@ -26,7 +26,7 @@ export const login = (payload) => (dispatch) => {
 
 export const signUp = (payload) => () => {
     return httpRequest
-        .post("/api/users/user", payload, postConfig)
+        .post("/users", payload, postConfig)
         .then((res) => {
             // Snackbar.show({
             //     text: res.data.Message,

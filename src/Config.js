@@ -1,1 +1,1 @@
-export const apiUrl="https://hackfest-backend.herokuapp.com/"
+export const apiUrl = "https://hackfest-backend.herokuapp.com/api/";

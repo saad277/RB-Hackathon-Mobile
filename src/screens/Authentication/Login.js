@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Dimensions, StyleSheet, Text, ScrollView } from "react-native";
+import { View, TouchableOpacity, Dimensions, StyleSheet, Text, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import Snackbar from "react-native-snackbar";
@@ -13,6 +13,8 @@ import Input from "../../components/Input";
 import { login } from "../../store/actions";
 
 const { width, height } = Dimensions.get("window");
+
+import Logo from "../../assets/logo.png";
 
 const Login = (props) => {
     const { login } = props;
@@ -43,6 +45,11 @@ const Login = (props) => {
     return (
         <View style={CommonStyles.flexOne}>
             <View style={styles.main}>
+                <Image
+                    source={Logo}
+                    style={{ width: 200, height: 100, alignSelf: "center" }}
+                    resizeMode="contain"
+                />
                 <View style={[styles.inputView, styles.mb16]}>
                     <Ionicons size={height * 0.04} name="mail-open-outline" />
                     <Input
