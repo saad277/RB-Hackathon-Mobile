@@ -4,15 +4,21 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { Colors, CommonStyles } from "../../styles";
 
 const Input = (props) => {
-    const { onChange=()=>{}, value, placeHolder, secureText = false } = props;
+    const {
+        onChange = () => {},
+        value,
+        placeHolder,
+        secureText = false,
+        containerStyles = {},
+    } = props;
 
     return (
-        <View style={styles.inputView}>
+        <View style={[styles.inputView, containerStyles]}>
             <TextInput
                 value={value}
                 style={styles.inputText}
                 placeholder={placeHolder}
-                placeholderTextColor="#fff"
+                placeholderTextColor={Colors.secondary}
                 onChangeText={(value) => onChange(value)}
                 secureTextEntry={secureText}
             />
@@ -22,18 +28,15 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
     inputView: {
-        borderColor: Colors.primary,
-        borderWidth: 1.4,
-        borderRadius: 12,
-        height: 50,
-        marginBottom: 20,
+        borderRadius: 25,
+        marginLeft: 10,
         ...CommonStyles.justifyCenter,
-        padding: 20,
+        ...CommonStyles.flexOne,
     },
     inputText: {
         height: 50,
-        fontSize: 20,
-        color: Colors.primary,
+        fontSize: 16,
+        color: Colors.black,
     },
 });
 

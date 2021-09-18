@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { AuthStack } from "./navigation";
 
 const App = () => {
     return (
-        <View style={{ padding: 12 }}>
-            <Text>asdsa</Text>
-        </View>
+        <NavigationContainer>
+            <AuthStack />
+        </NavigationContainer>
     );
 };
 
