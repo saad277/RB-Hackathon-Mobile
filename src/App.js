@@ -1,12 +1,19 @@
 import React from "react";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { AuthStack } from "./navigation";
+
+import { Colors } from "./styles";
+
+import { RootStack } from "./navigation";
 
 const App = () => {
     return (
-        <NavigationContainer>
-            <AuthStack />
-        </NavigationContainer>
+        <>
+            <StatusBar backgroundColor={Colors.primary} />
+            <NavigationContainer>
+                <RootStack />
+            </NavigationContainer>
+        </>
     );
 };
 

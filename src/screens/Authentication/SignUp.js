@@ -120,6 +120,8 @@ const Login = (props) => {
             img: image.base64,
         };
 
+        setFetching(true);
+
         signUp(payload)
             .then((res) => {})
             .catch((err) => {})

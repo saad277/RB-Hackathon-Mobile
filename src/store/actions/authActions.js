@@ -16,6 +16,7 @@ export const login = (payload) => (dispatch) => {
             //  return dispatch(getMe(token) as any);
         })
         .catch((err) => {
+            console.log(err)
             Snackbar.show({
                 text: getError(err),
                 duration: Snackbar.LENGTH_SHORT,
@@ -35,6 +36,7 @@ export const signUp = (payload) => () => {
             return Promise.resolve(res.data);
         })
         .catch((err) => {
+            console.log("--->",err.response.data)
             Snackbar.show({
                 text: getError(err),
                 duration: Snackbar.LENGTH_SHORT,
