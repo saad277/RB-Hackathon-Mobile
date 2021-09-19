@@ -1,6 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Snackbar from "react-native-snackbar";
-
 import { httpRequest, postConfig, getError, getConfig } from "../../utils/requestUtils";
 
 export const getAppointments = (token) => (dispatch, getState) => {
@@ -11,8 +8,6 @@ export const getAppointments = (token) => (dispatch, getState) => {
     return httpRequest
         .get(`/appointments/${_id}`, getConfig(Token))
         .then((res) => {
-            console.log("resss====>", res);
-
             return Promise.resolve(res.data);
         })
         .catch((err) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, FlatList, Image } from "react-native";
+import { View, StyleSheet, Text, FlatList, Image, ActivityIndicator } from "react-native";
 import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import Snackbar from "react-native-snackbar";
@@ -16,8 +16,10 @@ import Doctor from "../../assets/doctor.jpg";
 const Appointments = (props) => {
     const { getAppointments } = props;
 
+    const [data, setData] = useState([]);
+
     useEffect(() => {
-        getAppointments();
+        getAppointments().then((res) => {});
     }, []);
 
     const renderItem = ({ item, index }) => {
@@ -25,10 +27,7 @@ const Appointments = (props) => {
         return (
             <View style={[styles.card, index === mock.length && styles.mb20]}>
                 <View style={styles.imageContainer}>
-                    <Image
-                        style={{ width: 50, height: 50, borderRadius: 50, marginLeft: 20 }}
-                        source={Doctor}
-                    />
+                    <Image style={styles.img} source={Doctor} />
                 </View>
                 <View style={styles.detailsContainer}>
                     <Text style={styles.name}>{name}</Text>
@@ -79,6 +78,12 @@ const styles = StyleSheet.create({
     imageContainer: {
         paddingTop: 8,
         ...CommonStyles.alignItemCenter,
+    },
+    img: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginLeft: 20,
     },
     detailsContainer: {
         marginLeft: 15,
