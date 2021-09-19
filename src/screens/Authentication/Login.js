@@ -20,43 +20,56 @@ const Login = (props) => {
     const { login } = props;
 
     const [passwordHideState, setPasswordHideState] = useState(true);
-    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [fetching, setFetching] = useState(false);
     const navigation = useNavigation();
 
     const canSubmit = () => {
-        if (!(email.trim().length && password.trim().length)) {
+        if (!(phone.trim().length && password.trim().length)) {
             Snackbar.show({
                 text: "Please please fill all fields",
                 duration: Snackbar.LENGTH_SHORT,
             });
-
             return false;
         }
-
         return true;
     };
 
     const handleSubmit = () => {
         if (!canSubmit()) {
+            return;
         }
-    };
 
+        setFetching(true);
+
+        let payload = {
+            phone: phone,
+            password: password,
+        };
+
+        login(payload)
+            .then((res) => {
+                navigation.replace(APP_ROUTES.USER);
+            })
+            .catch(() => {})
+            .finally(() => {
+                setFetching(false);
+            });
+    };
+    //0332234822
     return (
         <View style={CommonStyles.flexOne}>
             <View style={styles.main}>
-                <Image
-                    source={Logo}
-                    style={{ width: 200, height: 100, alignSelf: "center" }}
-                    resizeMode="contain"
-                />
+                <Image source={Logo} style={styles.logo} resizeMode="contain" />
                 <View style={[styles.inputView, styles.mb16]}>
                     <Ionicons size={height * 0.04} name="mail-open-outline" />
                     <Input
-                        onChange={email}
-                        value={setEmail}
-                        placeHolder={"Email"}
+                        onChange={setPhone}
+                        value={phone}
+                        placeHolder={"Phone"}
                         secureText={false}
+                        keyboardType={"phone-pad"}
                     />
                 </View>
 
@@ -74,9 +87,15 @@ const Login = (props) => {
                         secureText={passwordHideState}
                     />
                 </View>
-                <Button title={"Login"} style={styles.btn} onPress={handleSubmit} />
+                <Button
+                    title={"Login"}
+                    style={styles.btn}
+                    onPress={handleSubmit}
+                    loading={fetching}
+                />
                 <TouchableOpacity
                     style={styles.textContainer}
+                    disabled={fetching}
                     onPress={() => navigation.navigate(APP_ROUTES.SIGNUP)}
                 >
                     <Text style={styles.text}>Create an account ?</Text>
@@ -114,6 +133,11 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginHorizontal: width * 0.1,
+    },
+    logo: {
+        width: 200,
+        height: 100,
+        ...CommonStyles.alignSelfCenter,
     },
 });
 

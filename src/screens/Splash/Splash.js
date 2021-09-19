@@ -1,21 +1,43 @@
 import React, { useEffect } from "react";
 import { View, Dimensions, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
 
 import { CommonStyles, Colors } from "../../styles";
 
 import APP_ROUTES from "../../navigation";
+import { getMe } from "../../store/actions";
 
 const { width } = Dimensions.get("window");
 
 import Logo from "../../assets/logo.png";
 
-const Splash = () => {
+const Splash = (props) => {
+    const { getMe } = props;
     const navigation = useNavigation();
 
     useEffect(() => {
+        const initialize = async () => {
+            const token = await AsyncStorage.getItem("token");
+
+            if (token) {
+                getMe(token)
+                    .then((res) => {
+                        navigation.replace(APP_ROUTES.USER);
+                    })
+                    .catch((err) => {
+                        navigation.replace(APP_ROUTES.AUTH);
+                    });
+
+                return;
+            }
+
+            navigation.navigate(APP_ROUTES.AUTH);
+        };
+
         setTimeout(() => {
-            navigation.replace(APP_ROUTES.AUTH);
+            initialize();
         }, 5000);
     }, []);
 
@@ -42,4 +64,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Splash;
+const mapDispatchToProps = {
+    getMe,
+};
+
+export default connect(null, mapDispatchToProps)(Splash);

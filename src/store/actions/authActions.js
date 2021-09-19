@@ -8,15 +8,18 @@ export const LOG_OUT = "LOG_OUT";
 
 export const login = (payload) => (dispatch) => {
     return httpRequest
-        .post("/users/", payload, postConfig)
+        .post("/users/login", payload, postConfig)
         .then(async (res) => {
-            console.log(res);
-            //  let token = res.data.Token;
-            //  await AsyncStorage.setItem('token', token);
-            //  return dispatch(getMe(token) as any);
+            let token = res.data.accessToken;
+            await AsyncStorage.setItem("token", token);
+            Snackbar.show({
+                text: "Logged in",
+                duration: Snackbar.LENGTH_SHORT,
+            });
+            return dispatch(getMe(token));
         })
         .catch((err) => {
-            console.log(err)
+            console.log(err);
             Snackbar.show({
                 text: getError(err),
                 duration: Snackbar.LENGTH_SHORT,
@@ -29,14 +32,13 @@ export const signUp = (payload) => () => {
     return httpRequest
         .post("/users", payload, postConfig)
         .then((res) => {
-            // Snackbar.show({
-            //     text: res.data.Message,
-            //     duration: Snackbar.LENGTH_SHORT,
-            // });
+            Snackbar.show({
+                text: "Profile Created",
+                duration: Snackbar.LENGTH_SHORT,
+            });
             return Promise.resolve(res.data);
         })
         .catch((err) => {
-            console.log("--->",err.response.data)
             Snackbar.show({
                 text: getError(err),
                 duration: Snackbar.LENGTH_SHORT,
@@ -47,8 +49,12 @@ export const signUp = (payload) => () => {
 
 export const getMe = (token) => (dispatch) => {
     return httpRequest
-        .get(`/api/user/me/${token}`, getConfig(token))
+        .get(`/users/me`, getConfig(token))
         .then((res) => {
+            dispatch({
+                type: ME_SUCCESS,
+                payload: { Token: token, ...res.data.user },
+            });
             return Promise.resolve(res.data);
         })
         .catch((err) => {
@@ -56,7 +62,6 @@ export const getMe = (token) => (dispatch) => {
                 text: getError(err),
                 duration: Snackbar.LENGTH_SHORT,
             });
-
             dispatch(logout());
             return Promise.reject(err);
         });
@@ -64,4 +69,7 @@ export const getMe = (token) => (dispatch) => {
 
 export const logout = () => async () => {
     await AsyncStorage.removeItem("token");
+    dispatch({
+        type: LOG_OUT,
+    });
 };

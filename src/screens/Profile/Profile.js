@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import Snackbar from "react-native-snackbar";
 import { connect } from "react-redux";
 
 import { CommonStyles, Colors } from "../../styles";
@@ -24,7 +23,9 @@ import Avatar from "../../assets/avatar.png";
 
 const { width, height } = Dimensions.get("window");
 
-const Profile = () => {
+const Profile = (props) => {
+    const { user } = props;
+
     const renderField = (label, text) => {
         return (
             <View style={styles.field}>
@@ -41,19 +42,20 @@ const Profile = () => {
             <ScrollView>
                 <View style={styles.wrapper1}>
                     <View style={styles.wrapper}>
-                        <Image source={Avatar} style={styles.img} resizeMode="cover" />
+                        <Image
+                            source={user.img ? { uri: user.img } : Avatar}
+                            style={styles.img}
+                            resizeMode="cover"
+                        />
                         <TouchableOpacity style={styles.editContainer}>
                             <Ionicons size={height * 0.04} name="pencil" />
                         </TouchableOpacity>
                     </View>
                     <View>
-                        {renderField("First Name", "steve")}
-                        {renderField("Last Name", "G")}
-                        {renderField("Email", "saad@gmail.com")}
-                        {renderField("Phone", "+03330231707")}
-                        {renderField("Email", "saad@gmail.com")}
-                        {renderField("Gender", "Male")}
-                        {renderField("Date of birth", "2000-01-01")}
+                        {renderField("First Name", user.firstName || "-")}
+                        {renderField("Last Name", user.lastName || "-")}
+                        {renderField("Email", user.email || "-")}
+                        {renderField("Phone", user.phone || "-")}
                     </View>
                 </View>
             </ScrollView>
@@ -106,4 +108,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Profile;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user,
+    };
+};
+
+export default connect(mapStateToProps)(Profile);
