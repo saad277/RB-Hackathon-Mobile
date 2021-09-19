@@ -33,7 +33,7 @@ const Splash = (props) => {
                 return;
             }
 
-            navigation.navigate(APP_ROUTES.AUTH);
+            navigation.replace(APP_ROUTES.AUTH);
         };
 
         setTimeout(() => {
