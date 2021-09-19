@@ -16,15 +16,25 @@ import { CommonStyles, Colors } from "../../styles";
 
 import APP_ROUTES from "../../navigation";
 import Button from "../../components/Button";
-import Input from "../../components/Input";
 import { Header } from "../../components/Header";
+import { logout } from "../../store/actions";
 
 import Avatar from "../../assets/avatar.png";
 
 const { width, height } = Dimensions.get("window");
 
 const Profile = (props) => {
-    const { user } = props;
+    const { user, logout } = props;
+    const navigation = useNavigation();
+
+    const handleLogout = () => {
+        logout().then(() => {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: APP_ROUTES.AUTH }],
+            });
+        });
+    };
 
     const renderField = (label, text) => {
         return (
@@ -43,7 +53,7 @@ const Profile = (props) => {
                 <View style={styles.wrapper1}>
                     <View style={styles.wrapper}>
                         <Image
-                            source={user.img ? { uri: user.img } : Avatar}
+                            source={user?.img ? { uri: user?.img } : Avatar}
                             style={styles.img}
                             resizeMode="cover"
                         />
@@ -52,11 +62,12 @@ const Profile = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        {renderField("First Name", user.firstName || "-")}
-                        {renderField("Last Name", user.lastName || "-")}
-                        {renderField("Email", user.email || "-")}
-                        {renderField("Phone", user.phone || "-")}
+                        {renderField("First Name", user?.firstName || "-")}
+                        {renderField("Last Name", user?.lastName || "-")}
+                        {renderField("Email", user?.email || "-")}
+                        {renderField("Phone", user?.phone || "-")}
                     </View>
+                    <Button title="Logout" style={styles.btn} onPress={handleLogout} />
                 </View>
             </ScrollView>
         </View>
@@ -106,6 +117,11 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
     },
+    btn: {
+        marginHorizontal: 24,
+        marginBottom: 20,
+        marginTop: 20,
+    },
 });
 
 const mapStateToProps = (state) => {
@@ -114,4 +130,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = {
+    logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

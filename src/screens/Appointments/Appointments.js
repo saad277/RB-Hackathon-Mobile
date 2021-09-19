@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -8,13 +8,18 @@ import { connect } from "react-redux";
 import { CommonStyles, Colors } from "../../styles";
 
 import APP_ROUTES from "../../navigation";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
 import { Header } from "../../components/Header";
+import { getAppointments } from "../../store/actions";
 
 import Doctor from "../../assets/doctor.jpg";
 
-const Appointments = () => {
+const Appointments = (props) => {
+    const { getAppointments } = props;
+
+    useEffect(() => {
+        getAppointments();
+    }, []);
+
     const renderItem = ({ item, index }) => {
         const { name, timing, fees, designation } = item;
         return (
@@ -101,7 +106,11 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Appointments;
+const mapDispatchToProps = {
+    getAppointments,
+};
+
+export default connect(null, mapDispatchToProps)(Appointments);
 
 const mock = [
     { id: 1, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },

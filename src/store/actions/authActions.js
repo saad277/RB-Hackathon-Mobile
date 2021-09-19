@@ -67,9 +67,11 @@ export const getMe = (token) => (dispatch) => {
         });
 };
 
-export const logout = () => async () => {
+export const logout = () => async (dispatch) => {
     await AsyncStorage.removeItem("token");
     dispatch({
         type: LOG_OUT,
     });
+
+    return Promise.resolve(true);
 };
